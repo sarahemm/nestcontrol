@@ -1,0 +1,9 @@
+weekday_wakeup:
+  time: "0600"
+  days:
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+  scene: WakeUp  

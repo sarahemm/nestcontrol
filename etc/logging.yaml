@@ -9,6 +9,11 @@ loggers:
   outputters    : 
   - console
 
+- name          : scheduler
+  level         : DEBUG
+  outputters    : 
+  - console
+
 - name          : sonos
   level         : DEBUG
   outputters    : 

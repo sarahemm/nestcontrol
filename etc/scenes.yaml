@@ -16,4 +16,7 @@ Sleep:
       all: stop
   lighting:
     bedroom_light: off
-    
+WakeUp:
+  audio:
+    transport:
+      all: stop
