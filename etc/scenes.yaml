@@ -17,6 +17,12 @@ Sleep:
   lighting:
     bedroom_light: off
 WakeUp:
+  lighting:
+    bedroom_light: on
   audio:
-    transport:
-      all: stop
+    group:
+      - Bedroom
+      - Bathroom
+    content:
+      Bedroom: di_classic_vocal_trance
+      
