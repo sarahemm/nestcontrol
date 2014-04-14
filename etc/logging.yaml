@@ -24,6 +24,11 @@ loggers:
   outputters    : 
   - console
 
+- name          : weather
+  level         : DEBUG
+  outputters    : 
+  - console
+
 - name          : zwave
   level         : DEBUG
   outputters    : 
