@@ -14,7 +14,7 @@ module NestControl
       @latest_forecast = ForecastIO.forecast            \
         NestConfig[:forecastio][:location][:latitude],  \
         NestConfig[:forecastio][:location][:longitude], \
-        params: {:units => "ca", :exclude => "daily,alerts,flags"}
+        params: {:units => NestConfig[:forecastio][:units], :exclude => "daily,alerts,flags"}
     end
     
     def temperature
