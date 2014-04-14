@@ -37,4 +37,4 @@ module NestControl
   end
 end
 
-NestControl::Handlers.register :tts, NestControl::CereVoice.new
+NestControl::Handlers.register :tts, 0, NestControl::CereVoice.new

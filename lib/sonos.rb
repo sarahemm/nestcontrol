@@ -143,4 +143,4 @@ module NestControl
   end
 end
 
-NestControl::Handlers.register :audio, NestControl::NestSonos.new
+NestControl::Handlers.register :audio, 0, NestControl::NestSonos.new

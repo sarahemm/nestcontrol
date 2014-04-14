@@ -33,4 +33,4 @@ module NestControl
   end
 end
 
-NestControl::Handlers.register :lighting, NestControl::NestZWave.new
+NestControl::Handlers.register :lighting, 0, NestControl::NestZWave.new
