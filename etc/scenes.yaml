@@ -1,0 +1,19 @@
+Upstairs:
+  lighting:
+    bedroom_light: on
+  audio:
+    group:
+      - Bedroom
+      - Bathroom
+    content:
+      Bedroom: di_chillout_dreams
+Sleep:
+  speech_hook:
+    name: sleep
+    speaker: Bedroom
+  audio:
+    transport:
+      all: stop
+  lighting:
+    bedroom_light: off
+    

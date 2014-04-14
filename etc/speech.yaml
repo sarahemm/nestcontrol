@@ -1,0 +1,3 @@
+hook_speech:
+  sleep:
+    0night: Test speech hook!

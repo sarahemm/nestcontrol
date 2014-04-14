@@ -1,0 +1,6 @@
+controller:
+  port: /dev/ttyS0
+devices:
+  bedroom_light:
+    type: switch
+    id: 4

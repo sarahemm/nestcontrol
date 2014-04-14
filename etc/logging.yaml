@@ -1,0 +1,33 @@
+loggers:
+- name          : nestcontrol
+  level         : DEBUG
+  outputters    : 
+  - console
+
+- name          : scenes
+  level         : DEBUG
+  outputters    : 
+  - console
+
+- name          : sonos
+  level         : DEBUG
+  outputters    : 
+  - console
+
+- name          : speech
+  level         : DEBUG
+  outputters    : 
+  - console
+
+- name          : zwave
+  level         : DEBUG
+  outputters    : 
+  - console
+
+outputters:
+- type: StdoutOutputter
+  name: console
+  formatter:
+    date_pattern: '%H:%M:%S'
+    pattern     : '%d [%c] %l: %m'
+    type        : PatternFormatter
