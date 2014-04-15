@@ -1,3 +1,6 @@
 hook_speech:
   sleep:
-    0night: Test speech hook!
+    0night: Good night Senn and Yoda!
+  beforework:
+    0beforework: Time for work!
+    99beforework: "That's all the information I have right now, have a good day!"
