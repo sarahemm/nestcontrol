@@ -7,3 +7,12 @@ weekday_wakeup:
     - Thursday
     - Friday
   scene: WakeUp  
+weekday_beforework:
+  time: "0655"
+  days:
+    - Monday
+    - Tuesday
+    - Wednesday
+    - Thursday
+    - Friday
+  scene: BeforeWork 

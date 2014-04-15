@@ -7,6 +7,12 @@ Upstairs:
       - Bathroom
     content:
       Bedroom: di_chillout_dreams
+Downstairs:
+  lighting:
+    bedroom_light: off
+  audio:
+    transport:
+      all: stop
 Sleep:
   speech_hook:
     name: sleep
@@ -25,4 +31,7 @@ WakeUp:
       - Bathroom
     content:
       Bedroom: di_classic_vocal_trance
-      
+BeforeWork:
+  speech_hook:
+    name: beforework
+    speaker: Bedroom
