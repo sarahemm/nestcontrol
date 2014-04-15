@@ -18,7 +18,6 @@ Log4r::YamlConfigurator.decode_yaml(YAML.load_file("#{basedir}/etc/logging.yaml"
 log = Log4r::Logger['nestcontrol']
 
 # load all the config files
-
 NestConfig::load_files("#{basedir}/etc/*.yaml")
 
 # load all the support classes
@@ -52,12 +51,3 @@ OSC.run do
     Scenes::launch scene_name.to_sym
   end
 end
-
-#schedule = Rufus::Scheduler.new
-#
-#schedule.cron "*/1 * * * * *" do 
-#  puts "1 second tick"
-#end
-
-# join the scheduling thread to the main one so we never exit
-#schedule.join
