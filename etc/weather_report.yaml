@@ -1,0 +1,10 @@
+types:
+  long_today:
+    - current_conditions
+    - short_term
+    - medium_term
+    
+hooks:
+  beforework:
+    priority: 50
+    type: long_today
