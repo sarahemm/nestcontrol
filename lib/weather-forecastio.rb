@@ -4,7 +4,7 @@ require 'forecast_io'
 module NestControl
   class NestForecastIO
     def initialize
-      log = Log4r::Logger['weather']
+      @log = Log4r::Logger['weather']
       
       ForecastIO.api_key = NestConfig[:forecastio][:account][:api_key]
       self.update_forecast
@@ -15,6 +15,7 @@ module NestControl
         NestConfig[:forecastio][:location][:latitude],  \
         NestConfig[:forecastio][:location][:longitude], \
         params: {:units => NestConfig[:forecastio][:units], :exclude => "daily,alerts,flags"}
+      @log.warn "Unable to fetch latest forecast from forecast.io, weather will be unavailable" if !@latest_forecast
     end
     
     def temperature
