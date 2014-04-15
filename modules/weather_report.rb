@@ -11,7 +11,7 @@ module NestControl
     end
     
     def self.generate_report(type)
-      # TODO: get updated weather data before building a report
+      Handlers[:weather].first.update_forecast
       log = Log4r::Logger['weather']
       log.info "Generating '#{type}' type weather report"
       output = []
