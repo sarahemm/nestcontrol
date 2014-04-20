@@ -28,6 +28,7 @@ module NestControl
     def ungroup_all
       @log.info "Ungrouping all speakers"
       @sonos.party_over
+      @sonos.rescan
     end
     
     class Speaker
@@ -99,7 +100,7 @@ module NestControl
           @log.error "Failed to join speaker, waiting 1 second and trying again"
         end
         # have to rescan for groups every time a node leaves/joins a group
-        @system.rescan @system.topology
+        @system.rescan
       end
       
       # play an announcement, then go back to whatever was playing before
