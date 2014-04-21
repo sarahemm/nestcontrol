@@ -21,7 +21,14 @@ module NestControl
     end
     
     def stop_all
-      @sonos.pause_all
+      # FIXME: we can't use ruby-sonos' pause_all, beacuse if something is already
+      # paused it errors out with a UPnPError.
+      # We should fix this in ruby-sonos and send the fix upstream.
+      #@sonos.pause_all
+      @sonos.speakers.each do |speaker|
+        speaker.pause if speaker.get_player_state[:state] == "PLAYING"
+      end
+      
       @log.info "Stopping audio everywhere"
     end
     
