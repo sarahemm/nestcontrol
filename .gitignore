@@ -32,3 +32,6 @@ build/
 
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
+
+# temporary test file used for random small standalone tests
+t.rb
