@@ -39,13 +39,19 @@ while(true) do
       # check if the file has dependency info in the first line
       first_line = handle.readline
       next if !re = first_line.match(/^#\s*depends_on\s+(.*)/)
-      depends_on = "#{module_dir}#{re[1]}.rb"
+      depends_on_list = re[1]
       # found dependency info, check if we need to re-order this item
-      depends_on_index = module_list.index depends_on
-      next if index > depends_on_index
+      highest_dep_index = -1
+      depends_on_list.split(/,\s*/).each do |depends_on_module|
+        depends_on = "#{module_dir}#{depends_on_module}.rb"
+        depends_on_index = module_list.index(depends_on)
+        raise RuntimeError, "Unable to find dependency #{depends_on} for module #{file}" if !depends_on_index
+        highest_dep_index = depends_on_index if depends_on_index > highest_dep_index
+      end
+      next if index > highest_dep_index
       # we do need to re-order it, remove the item and add it before what it depends on
       module_list.delete_at index
-      module_list.insert(depends_on_index + 1, file)
+      module_list.insert(highest_dep_index + 1, file)
       changes_made = true
     end
   end
