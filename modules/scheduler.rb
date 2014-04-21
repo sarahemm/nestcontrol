@@ -52,7 +52,7 @@ module NestControl
     def schedule_repeating(name, cron_string, task, tag = nil)
       log = Log4r::Logger['scheduler']
       log.debug "Adding repeating scheduled task '#{name}' with schedule '#{cron_string}'"
-      @@schedule.cron cron_string, tag do
+      @@schedule.cron cron_string, :tag => tag do
         log.info "Launching repeating task #{name}"
         task.call
       end
@@ -62,10 +62,15 @@ module NestControl
     def schedule_oneshot(name, at_string, task, tag = nil)
       log = Log4r::Logger['scheduler']
       log.debug "Adding oneshot scheduled task '#{name}' to run at #{at_string}"
-      @@schedule.at at_string, tag do
+      @@schedule.at at_string, :tag => tag do
         log.info "Launching oneshot task #{name}"
         task.call
       end
+    end
+    
+    # get a list of the scheduled events matching a specific tag
+    def get_by_tag(tag)
+      @@schedule.jobs :tag => tag
     end
   end
 end
