@@ -18,7 +18,7 @@ module NestControl
         :sat => 6 
       }
       
-      @schedule = Rufus::Scheduler.new
+      @@schedule = Rufus::Scheduler.new
       NestConfig[:schedule].each do |name, cfg|
         if(cfg[:time]) then
           # it's a "run at X time" item
@@ -35,7 +35,7 @@ module NestControl
           cron_string = "#{minute} #{hour} * * #{days_cron}"
           log.info "Scheduling #{name} to run at #{hour}#{minute} #{days_text}"
           # actually schedule the item to run at the given time
-          @schedule.cron cron_string do
+          @@schedule.cron cron_string do
             log.info "Launching scheduled task #{name}"
             Scenes::launch cfg[:scene].to_sym
           end
@@ -45,6 +45,26 @@ module NestControl
         else
           log.warn "Can't figure out what type of schedule #{name} should run on, ignoring"
         end
+      end
+    end
+    
+    # schedule an event on-demand that will repeat
+    def schedule_repeating(name, cron_string, task, tag = nil)
+      log = Log4r::Logger['scheduler']
+      log.debug "Adding repeating scheduled task '#{name}' with schedule '#{cron_string}'"
+      @@schedule.cron cron_string, tag do
+        log.info "Launching repeating task #{name}"
+        task.call
+      end
+    end
+    
+    # schedule an event on-demand that only runs once
+    def schedule_oneshot(name, at_string, task, tag = nil)
+      log = Log4r::Logger['scheduler']
+      log.debug "Adding oneshot scheduled task '#{name}' to run at #{at_string}"
+      @@schedule.at at_string, tag do
+        log.info "Launching oneshot task #{name}"
+        task.call
       end
     end
   end
