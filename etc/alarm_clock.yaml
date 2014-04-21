@@ -1,0 +1,25 @@
+schedule:
+  set_at: "2130"
+  alarm:
+    monday:     "0600"
+    tuesday:    "0600"
+    wednesday:  "0600"
+    thursday:   "0600"
+    friday:     "0600"
+    saturday:   "0930"
+    sunday:     "0930"
+actions:
+  wakeup:
+    offset: 0
+  beforework:
+    offset: +55
+    only_on:
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+speech_hooks:
+  sleep:
+    type: time_until_alarm
+    priority: 50
