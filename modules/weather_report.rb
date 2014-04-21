@@ -1,3 +1,5 @@
+# depends_on speech
+
 module NestControl
   class WeatherReport
     def self.register_hooks

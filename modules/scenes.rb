@@ -1,3 +1,5 @@
+# depends_on speech
+
 # TODO: this module is getting unmanagably nested already, and there's still a lot to come
 module NestControl
   class Scenes
