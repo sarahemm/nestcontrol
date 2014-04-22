@@ -3,7 +3,7 @@ require 'zwave'
 module NestControl
   class NestZWave
     def initialize
-      log = Log4r::Logger['zwave']
+      log = Log4r::Logger['lighting']
 
       # open a connection to the ZWave controller
       log.info "Initializing ZWave controller on port #{NestConfig[:zwave][:controller][:port]}"

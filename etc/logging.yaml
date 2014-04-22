@@ -4,6 +4,11 @@ loggers:
   outputters    : 
   - console
 
+- name          : network
+  level         : DEBUG
+  outputters    : 
+  - console
+
 - name          : scenes
   level         : DEBUG
   outputters    : 
@@ -29,7 +34,7 @@ loggers:
   outputters    : 
   - console
 
-- name          : zwave
+- name          : lighting
   level         : DEBUG
   outputters    : 
   - console
