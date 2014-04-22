@@ -36,6 +36,3 @@ build/
 # temporary test file used for random small standalone tests
 t.rb
 
-# config files have a lot of secret keys in them, will commit manually where
-# needed but don't want to be bugged every time
-etc/*
