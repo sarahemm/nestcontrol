@@ -1,4 +1,4 @@
-# depends_on scenes
+depends_on :scenes
 
 module NestControl
   class OSCFrontend

@@ -1,4 +1,4 @@
-# depends_on speech
+depends_on :speech
 
 module NestControl
   class WeatherReport

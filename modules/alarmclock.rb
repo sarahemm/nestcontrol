@@ -1,4 +1,5 @@
-# depends_on scheduler,speech
+depends_on :scheduler
+depends_on :speech
 
 # TODO: deal with setting the next day's alarm even if we launch after the setting time
 # TODO: add ability to adjust alarm clock both before or after it's set for the next day
