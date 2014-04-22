@@ -1,9 +1,6 @@
 #!/opt/local/bin/ruby1.9
 
 require 'rubygems'
-#require 'rufus/scheduler'
-require 'ruby-osc'
-require 'zwave'
 require 'log4r'
 require 'log4r/yamlconfigurator'
 require './config.rb'
@@ -29,6 +26,7 @@ end
 # reorder the list of modules by looking at their dependency information
 module_dir = "#{basedir}/modules/"
 module_list = Dir.glob("#{module_dir}*.rb").sort
+# TODO: this should be put into a subroutine rather than inlined here
 pass = 0
 while(true) do
   log.debug "Starting module dependency resolution, pass #{pass}"
@@ -66,23 +64,5 @@ module_list.each do |file|
   load file
 end
 
-
 log.info "Initialization complete, system ready"
-
-# TODO: figure out how to modularize this better
-OSC.run do
-  osc = OSC::Server.new 8000, "0.0.0.0"
-  
-  osc.add_pattern /^\/ManualControl\/(.*)$/ do |key, value|
-    device_name = /^\/ManualControl\/(.*)$/.match(key)[1]
-    log.info "Setting ZWave device #{device_name} to level #{value}"
-    Handlers[:lighting].first[device_name].set(value)
-  end
-  
-  osc.add_pattern /^\/Scenes\/(.*)$/ do |key, value|
-    next if value < 1.0 # ignore "key up"
-    scene_name = /^\/Scenes\/(.*)$/.match(key)[1]
-    log.info "Launching scene #{scene_name}"
-    Scenes::launch scene_name.to_sym
-  end
-end
+CoreEventMachine.instance.run
