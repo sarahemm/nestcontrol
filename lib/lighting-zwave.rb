@@ -1,3 +1,5 @@
+require 'zwave'
+
 module NestControl
   class NestZWave
     def initialize
