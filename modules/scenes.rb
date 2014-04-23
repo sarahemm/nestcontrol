@@ -11,7 +11,7 @@ module NestControl
     def self.launch(name)
       log = Log4r::Logger['scenes']
       
-      scene = NestConfig[:scenes][name]
+      scene = NestConfig[:scenes][name.to_sym]
       if(!scene) then
         log.warn "Attempted to launch non-existent scene '#{name}'"
         return nil
