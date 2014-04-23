@@ -20,10 +20,11 @@ module NestControl
       category_match = /\/#{category.to_s}\/(.*)/i
       @log.info "Binding OSC category '#{category}' to callee #{callee}"
       @osc_server.add_method category_match do |message|
-        address = category_match.match(message.address)[1]
-        args = message.to_a
-        @log.debug "OSC message #{address}=#{args} received, calling #{callee}"
-        callee.call address, args
+        args = category_match.match(message.address)[1].split("/")
+        address = args.shift
+        values = message.to_a
+        @log.debug "OSC message #{address}/#{args}=#{values} received, calling #{callee}"
+        callee.call address, args, values
       end
     end
   end

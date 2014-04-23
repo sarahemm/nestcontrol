@@ -5,7 +5,7 @@ module NestControl
   class Scenes
     
     def self.setup
-      Handlers[:trigger].first.bind_trigger :scenes, lambda {|key, args| self.launch(key) if args[0] == 1.0 }
+      Handlers[:trigger].first.bind_trigger :scenes, lambda {|key, args, values| self.launch(key) if values[0] == 1.0 }
     end
     
     def self.launch(name)

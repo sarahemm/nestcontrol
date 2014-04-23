@@ -4,7 +4,7 @@ module NestControl
     
     def setup
       @log = Log4r::Logger['lighting']
-      Handlers[:trigger].first.bind_trigger :manualcontrol, lambda {|key, args| manual_control(key, args[0]) }
+      Handlers[:trigger].first.bind_trigger :manualcontrol, lambda {|key, args, values| manual_control(key, values[0]) }
     end
 
     def manual_control(device_name, value)
