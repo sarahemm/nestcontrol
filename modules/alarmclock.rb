@@ -59,8 +59,7 @@ module NestControl
         Scheduler.instance.schedule_oneshot "alarmclock_#{name}", action_time, lambda { Scenes::launch name.to_sym }, "alarmclock"
       end
       announcement = "Since tomorrow is #{next_day}, I've set your alarm for #{next_alarm_hour}:#{next_alarm_minute}."
-      # TODO: remove hardcoded speaker (should announce everywhere)
-      #Handlers[:audio].first.speaker("Bedroom").play_announcement_url(Handlers[:tts].first.render_speech(announcement))
+      Speech.instance.make_announcement announcement
     end
     
     def self.disable_next_alarm

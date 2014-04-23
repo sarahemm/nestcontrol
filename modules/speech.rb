@@ -9,6 +9,11 @@ module NestControl
       @hooks[hook] = SpeechHook.new(hook) if !@hooks[hook]
       @hooks[hook]
     end
+    
+    # TODO: remove hardcoded speaker (should announce everywhere)
+    def make_announcement(text, speaker = "Bedroom")
+      Handlers[:audio].first.speaker(speaker).play_announcement_url(Handlers[:tts].first.render_speech(text))
+    end
   end
 
   class SpeechHook
