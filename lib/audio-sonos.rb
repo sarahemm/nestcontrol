@@ -113,6 +113,7 @@ module NestControl
       # play an announcement, then go back to whatever was playing before
       # TODO: overlapping announcements will probably confuse everything
       def play_announcement_url(url)
+        return if !url  # only try to play if we actually got something
         @log.info "Playing #{url} on speaker #{@speaker}"
 
         # keep track of then fade out what was playing before, if anything

@@ -30,8 +30,11 @@ module NestControl
       http_response = http.post(uri.path, request_xml, {"Content-type" => "text/xml"})
       
       # parse out the resulting URL and return it
-      # TODO: should check if it succeeded, not just assume it did
       response = XmlSimple.xml_in(http_response.body)
+      if(response["resultCode"] != 1) then
+        log.error "Failed to generate speech, error code was #{response["resultCode"][0]} (#{response["resultDescription"][0]})"
+        return nil
+      end
       response["fileUrl"][0]
     end
   end
