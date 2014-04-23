@@ -10,6 +10,7 @@ module NestControl
 
       # create an OSC server instance and add it to the list of EM servers to run
       @osc_server = OSC::EMServer.new(8000) # TODO: configurable
+      @osc_client = OSC::Client.new('192.168.0.153', 9000)
       
       @log.debug "Registering OSC backend with CoreEventMachine"
       CoreEventMachine.instance.add_server @osc_server
@@ -26,6 +27,14 @@ module NestControl
         @log.debug "OSC message #{address}/#{args}=#{values} received, calling #{callee}"
         callee.call address, args, values
       end
+    end
+    
+    # send an outbound OSC message
+    def send_trigger(args)
+      address = "/#{args[:category]}/#{args[:key]}"
+      values = args[:values]
+      @log.debug "Sending OSC message #{address}=#{values}"
+      @osc_client.send(OSC::Message.new(address, values.join))
     end
   end
 end
