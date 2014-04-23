@@ -1,5 +1,6 @@
 require 'osc-ruby'
 require 'osc-ruby/em_server'
+require 'osc-ruby/broadcast_client'
 
 module NestControl
   class NestOSC
@@ -10,7 +11,7 @@ module NestControl
 
       # create an OSC server instance and add it to the list of EM servers to run
       @osc_server = OSC::EMServer.new(8000) # TODO: configurable
-      @osc_client = OSC::Client.new('192.168.0.153', 9000)
+      @osc_client = OSC::BroadcastClient.new(9000)
       
       @log.debug "Registering OSC backend with CoreEventMachine"
       CoreEventMachine.instance.add_server @osc_server
