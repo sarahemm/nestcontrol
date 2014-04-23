@@ -31,7 +31,7 @@ module NestControl
       
       # parse out the resulting URL and return it
       response = XmlSimple.xml_in(http_response.body)
-      if(response["resultCode"] != 1) then
+      if(response["resultCode"][0].to_i != 1) then
         log.error "Failed to generate speech, error code was #{response["resultCode"][0]} (#{response["resultDescription"][0]})"
         return nil
       end
