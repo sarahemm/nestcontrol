@@ -72,6 +72,15 @@ module NestControl
     def get_by_tag(tag)
       @@schedule.jobs :tag => tag
     end
+    
+    # delete all the jobs matching a specific tag
+    def delete_by_tag(tag)
+      log = Log4r::Logger['scheduler']
+      @@schedule.jobs(:tag => tag).each do |job|
+        log.debug "Unscheduling job #{job} matching tag #{tag}"
+        job.unschedule
+      end
+    end
   end
 end
 
