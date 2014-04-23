@@ -23,8 +23,15 @@ end
 # load all the config files
 NestConfig::load_files("#{basedir}/etc/*.yaml")
 
-# load all the support classes
+# load all the core support classes
+Dir.glob("#{basedir}/lib/core*.rb").each do |file|
+  @log.info "Loading core support library '#{File.basename(file, ".rb")}'"
+  load file
+end
+
+# load all the other support classes
 Dir.glob("#{basedir}/lib/*.rb").each do |file|
+  next if File.basename(file).start_with? 'core' # we already loaded core classes, skip them now
   @log.info "Loading support library '#{File.basename(file, ".rb")}'"
   load file
 end
