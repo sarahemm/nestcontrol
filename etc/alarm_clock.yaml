@@ -9,9 +9,9 @@ schedule:
     saturday:   "0930"
     sunday:     "0930"
 actions:
-  wakeup:
+  WakeUp:
     offset: 0
-  beforework:
+  BeforeWork:
     offset: +55
     only_on:
       - Monday
