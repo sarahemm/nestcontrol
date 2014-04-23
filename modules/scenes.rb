@@ -3,6 +3,11 @@ depends_on :speech
 # TODO: this module is getting unmanagably nested already, and there's still a lot to come
 module NestControl
   class Scenes
+    
+    def self.setup
+      Handlers[:trigger].first.bind_trigger :scenes, lambda {|key, args| self.launch(key) if args[0] == 1.0 }
+    end
+    
     def self.launch(name)
       log = Log4r::Logger['scenes']
       
@@ -89,3 +94,5 @@ module NestControl
     end
   end
 end
+
+Scenes.setup
