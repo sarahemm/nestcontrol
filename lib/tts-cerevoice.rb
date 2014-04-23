@@ -13,6 +13,13 @@ module NestControl
       log = Log4r::Logger['speech']
       log.info "Rendering #{text.length} characters of text in voice #{voice}"
 
+      if(NestConfig[:cerevoice][:test_mode]) then
+        # we're in test mode, just show what we would have rendered but don't render it
+        # this lets us test the rest of the infrastructure w/o using credits
+        log.debug "Not rendering due to test mode: #{text}"
+        return nil
+      end
+      
       # build the XML REST request
       request = {
         "accountID"   => [NestConfig[:cerevoice][:account][:id]],
