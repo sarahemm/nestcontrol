@@ -1,0 +1,3 @@
+ports:
+  incoming: 8000
+  outgoing: 9000

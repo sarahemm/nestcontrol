@@ -10,8 +10,8 @@ module NestControl
       @log = Log4r::Logger['network']
 
       # create an OSC server instance and add it to the list of EM servers to run
-      @osc_server = OSC::EMServer.new(8000) # TODO: configurable
-      @osc_client = OSC::BroadcastClient.new(9000)
+      @osc_server = OSC::EMServer.new(NestConfig[:osc][:ports][:incoming])
+      @osc_client = OSC::BroadcastClient.new(NestConfig[:osc][:ports][:outgoing])
       
       @log.debug "Registering OSC backend with CoreEventMachine"
       CoreEventMachine.instance.add_server @osc_server
