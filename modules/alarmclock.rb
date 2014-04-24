@@ -2,7 +2,6 @@ depends_on :scheduler
 depends_on :speech
 
 # TODO: deal with setting the next day's alarm even if we launch after the setting time
-# TODO: add ability to adjust alarm clock both before or after it's set for the next day
 module NestControl
   class AlarmClock
     include Singleton
@@ -43,6 +42,11 @@ module NestControl
     
     # set the next day's alarm to the pre-scheduled time
     def autoset_next_alarm
+      # don't re-set the alarm if it's already been manually set
+      if(get_alarm_time) then
+        @log.debug "Not auto-setting alarm as it has already been manually set"
+        return
+      end
       # next alarm will be tomorrow at whatever time is set for that day of the week
       tomorrow = Time.now + 60*60*24
       next_day = tomorrow.strftime("%A").downcase.to_sym
