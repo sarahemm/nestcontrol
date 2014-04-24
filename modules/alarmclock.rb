@@ -3,7 +3,6 @@ depends_on :speech
 
 # TODO: deal with setting the next day's alarm even if we launch after the setting time
 # TODO: add ability to adjust alarm clock both before or after it's set for the next day
-# TODO: deal with going to sleep (and thus launching the hook) before the alarm setting time
 module NestControl
   class AlarmClock
     include Singleton
@@ -16,7 +15,7 @@ module NestControl
       set_time = NestConfig[:alarm_clock][:schedule][:set_at]
       set_hour = set_time.to_s[0..1]
       set_minute = set_time.to_s[2..3]
-      Scheduler.instance.schedule_repeating "alarmclock_set", "#{set_minute} #{set_hour} * * *", lambda { set_next_alarm }
+      Scheduler.instance.schedule_repeating "alarmclock_set", "#{set_minute} #{set_hour} * * *", lambda { autoset_next_alarm }
       
       # hook up any configured speech hooks
       NestConfig[:alarm_clock][:speech_hooks].each do |name, cfg|
@@ -43,15 +42,17 @@ module NestControl
     end
     
     # set the next day's alarm to the pre-scheduled time
-    def set_next_alarm
+    def autoset_next_alarm
       # next alarm will be tomorrow at whatever time is set for that day of the week
+      tomorrow = Time.now + 60*60*24
+      next_day = tomorrow.strftime("%A").downcase.to_sym
       alarm_time = NestConfig[:alarm_clock][:schedule][:alarm][next_day]
-      alarm_hour = next_alarm_time.to_s[0..1]
-      alarm_minute = next_alarm_time.to_s[2..3]
+      alarm_hour = alarm_time.to_s[0..1]
+      alarm_minute = alarm_time.to_s[2..3]
       set_alarm_time alarm_hour, alarm_minute
 
       # announce what we set the alarm for
-      announcement = "Since tomorrow is #{next_day}, I've set your alarm for #{next_alarm_hour}:#{next_alarm_minute}."
+      announcement = "Since tomorrow is #{next_day}, I've set your alarm for #{alarm_hour}:#{alarm_minute}."
       Speech.instance.make_announcement announcement
     end
     
@@ -123,6 +124,11 @@ module NestControl
     # return the time until the next alarm, for speech hook use
     def time_until_alarm
       alarm_time = get_alarm_time
+      if(!alarm_time)
+        # alarm isn't set yet, must be calling the hook before setting time. set it now.
+        autoset_next_alarm
+        alarm_time = get_alarm_time
+      end
       alarm_text_time = alarm_time.strftime("%H:%M")
       time_until_secs = alarm_time - Time.now
       time_until_text = "#{(time_until_secs / (60*60)).floor} hours and #{(time_until_secs % (60*60) / 60).round} minutes"
