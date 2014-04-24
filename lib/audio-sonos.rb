@@ -35,7 +35,7 @@ module NestControl
     def ungroup_all
       @log.info "Ungrouping all speakers"
       @sonos.party_over
-      @sonos.rescan @system.topology
+      @sonos.rescan @sonos.topology
     end
     
     class Speaker
