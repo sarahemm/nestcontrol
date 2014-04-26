@@ -5,14 +5,15 @@ module NestControl
     def initialize
       @log = Log4r::Logger['sonos']
       @log.info "Connecting to Sonos system controller"
-      @sonos = Sonos::System.new
+      @disco = Sonos::Discovery.new
+      @sonos = Sonos::System.new disco.topology
     end
     
     def speaker(speaker_name)
       # look through all the speakers to find one that matches
       @sonos.speakers.each do |speaker|
         if(speaker.name == speaker_name)
-          return Speaker.new @sonos, speaker
+          return Speaker.new @sonos, @disco, speaker
         end
       end
       
@@ -35,13 +36,14 @@ module NestControl
     def ungroup_all
       @log.info "Ungrouping all speakers"
       @sonos.party_over
-      @sonos.rescan @sonos.topology
+      @sonos.rescan @disco.topology
     end
     
     class Speaker
-      def initialize(system, speaker)
+      def initialize(system, disco, speaker)
         @log = Log4r::Logger['sonos']
         @system = system
+        @disco = disco
         @speaker = speaker
       end
       
@@ -107,7 +109,7 @@ module NestControl
           @log.error "Failed to join speaker, waiting 1 second and trying again"
         end
         # have to rescan for groups every time a node leaves/joins a group
-        @system.rescan @system.topology
+        @system.rescan @disco.topology
       end
       
       # play an announcement, then go back to whatever was playing before
