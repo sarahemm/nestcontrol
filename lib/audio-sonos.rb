@@ -6,7 +6,7 @@ module NestControl
       @log = Log4r::Logger['sonos']
       @log.info "Connecting to Sonos system controller"
       @disco = Sonos::Discovery.new
-      @sonos = Sonos::System.new disco.topology
+      @sonos = Sonos::System.new @disco.topology
     end
     
     def speaker(speaker_name)
