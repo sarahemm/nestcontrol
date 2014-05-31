@@ -91,7 +91,7 @@ module NestControl
       
       def pause
         @log.info "Pausing audio on speaker #{@speaker.name}"
-        @speaker.pause
+        @speaker.pause if @speaker.get_player_state[:state] == "PLAYING"
       end
       
       def stop
