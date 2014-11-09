@@ -19,6 +19,7 @@ module NestControl
       }
       
       @@schedule = Rufus::Scheduler.new
+      return if !NestConfig[:schedule]
       NestConfig[:schedule].each do |name, cfg|
         if(cfg[:time]) then
           # it's a "run at X time" item
