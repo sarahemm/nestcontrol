@@ -4,3 +4,21 @@ devices:
   bedroom_light:
     type: switch
     id: 4
+  upstairs_hall_controller:
+    type: scene_controller
+    id: 9
+    buttons:
+      - bathroom_fan
+      - Shower
+      - Downstairs 
+      - Upstairs
+  bathroom_fan:
+    type: switch
+    id: 10
+  living_room_light:
+    type: dimmer
+    id: 7
+  upstairs_hall_light:
+    type: switch
+    id: 12
+

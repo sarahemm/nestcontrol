@@ -27,10 +27,10 @@ module NestControl
             category_data.each do |device, on|
               if(on) then
                 log.info "Turning on #{device}"
-                Handlers[:lighting].first[device.to_s].switch_on
+                Handlers[:lighting].first[device.to_s].on = true
               else
                 log.info "Turning off #{device}"
-                Handlers[:lighting].first[device.to_s].switch_off
+                Handlers[:lighting].first[device.to_s].on = false
               end
             end
           

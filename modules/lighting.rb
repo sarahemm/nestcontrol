@@ -8,8 +8,21 @@ module NestControl
     end
 
     def manual_control(device_name, value)
-      @log.info "Setting ZWave device #{device_name} to level #{value} via OSC"
-      Handlers[:lighting].first[device_name].set(value)
+      device = Handlers[:lighting].first[device_name]
+      if(device.class == ZWave::Switch) then
+        if(value >= 0.5) then
+	  @log.info "Turning ZWave switch #{device_name} on via OSC"
+	  device.on = true
+	else
+	  @log.info "Turning ZWave switch #{device_name} off via OSC"
+	  device.on = false
+	end
+      elsif(device.class == ZWave::Dimmer) then
+	@log.info "Setting #{device_name} to level #{value*100} via OSC"
+	device.level = value * 100
+      else
+        @log.error "Don't know how to control device of type #{device.class} via OSC."
+      end
     end
   end
 end
