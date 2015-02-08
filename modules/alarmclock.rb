@@ -105,7 +105,7 @@ module NestControl
     def set_alarm_from_trigger(hour_val, minute_val)
       # decode what time the button the user pressed refers to
       # TODO: put this in config file
-      hour_values = [5, 6, 7, 8, 9, 22]
+      hour_values = [5, 6, 7, 8, 9, 10]
       minute_values = [0, 15, 30, 45]
       hour = hour_values[hour_val.to_i - 1]
       minute = minute_values[minute_val.to_i - 1]
