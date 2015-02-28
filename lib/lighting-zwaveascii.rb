@@ -40,6 +40,10 @@ module NestControl
         @devices[device_name]
       end
      
+      def devices
+        @devices
+      end
+
       # get eventmachine to poll for events
       CoreEventMachine.instance.add_server self
     end
