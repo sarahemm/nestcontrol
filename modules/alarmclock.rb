@@ -87,7 +87,9 @@ module NestControl
         @log.info "Scheduling alarm for #{time.to_s} today"
       end
       NestConfig[:alarm_clock][:actions].each do |name, cfg|
-        action_time = time + cfg[:offset] * 60
+        # only add this action if it's supposed to be included on this day
+        next if cfg[:only_on] && !cfg[:only_on].include?(time.strftime("%A"))
+	action_time = time + cfg[:offset] * 60
         @log.debug "Adding alarm action '#{name}' at #{action_time}"
         Scheduler.instance.schedule_oneshot "alarmclock_#{name}", action_time, lambda { Scenes::launch name.to_sym }, "alarmclock"
       end
