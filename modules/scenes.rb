@@ -14,7 +14,7 @@ module NestControl
       scene = NestConfig[:scenes][name.to_sym]
       if(!scene) then
         log.warn "Attempted to launch non-existent scene '#{name}'"
-        return nil
+        return false
       end
       scene.each do |category, category_data|
         case category
@@ -43,6 +43,7 @@ module NestControl
             log.warn "Found unknown category '#{category}' in scene, ignoring"
         end
       end
+      true
     end
   
     private
