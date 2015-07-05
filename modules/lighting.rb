@@ -32,6 +32,9 @@ module NestControl
     end
 
     def send_lighting_status_update
+      # reset the interface to start with so we start in a known state
+      Handlers[:lighting].first.reset
+      # go through each device and get/report the status
       Handlers[:lighting].first.devices.each do |device_name, device|
         begin
 	  # see if the device supports level first
